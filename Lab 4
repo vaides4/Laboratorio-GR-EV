@@ -113,3 +113,113 @@ void setup() {
   attachInterrupt(brillo.boton_Brillo, handle_brillo, RISING);
 
 }
+
+void loop() {
+  if(moveRight.pressed != moveRight.lastState){
+    if (moveRight.pressed) {
+      y++;
+      if(y > 4){
+        y = 0;
+      }
+      moveRight.pressed = false;
+    }
+    moveRight.lastState = moveRight.pressed;
+  }
+
+  if(moveLeft.pressed != moveLeft.lastState){
+    if (moveLeft.pressed) {
+      y--;
+      if(y < 0){
+        y = 4;
+      }
+      moveLeft.pressed = false;
+    } 
+    moveLeft.lastState = moveLeft.pressed;
+  }
+
+  ledcWrite(canalPWM, servoPosition[y]);
+  
+  if(color.pressed != color.lastState) {
+    if(color.pressed){
+      z++;
+      if(z > 3){
+          z = 0;
+      }
+      delay(200);
+      color.pressed = false;
+    }
+    color.lastState = color.pressed;
+  }
+
+  if(brillo.pressed != brillo.lastState){
+    if(brillo.pressed){
+      n++;
+      if(n > 6){
+        n = 0;
+      }
+      delay(200);
+      brillo.pressed = false;
+    }
+    brillo.lastState = brillo.pressed;
+  }
+
+  switch(z) {
+    case 0: 
+      //Rojo
+      ledcWrite(canalPWMRojo, ledsBrillo[n]);
+      ledcWrite(canalPWMVerde, 0);
+      ledcWrite(canalPWMAzul, 0);
+      break;
+    case 1:
+      //verde
+      ledcWrite(canalPWMRojo, 0);
+      ledcWrite(canalPWMVerde, ledsBrillo[n]);
+      ledcWrite(canalPWMAzul, 0);
+      break;
+    case 2:
+      //azul
+      ledcWrite(canalPWMRojo, 0);
+      ledcWrite(canalPWMVerde, 0);
+      ledcWrite(canalPWMAzul, ledsBrillo[n]);
+      break;
+    case 3:
+      //servo
+      if(y <= 1){
+        ledcWrite(canalPWMRojo, ledsBrillo[n]);
+        ledcWrite(canalPWMVerde, 0);
+        ledcWrite(canalPWMAzul, 0);
+      }
+      else if(y > 1 && y <= 3){
+        ledcWrite(canalPWMRojo, 0);
+        ledcWrite(canalPWMVerde, ledsBrillo[n]);
+        ledcWrite(canalPWMAzul, 0);
+      }
+      else{
+        ledcWrite(canalPWMRojo, 0);
+        ledcWrite(canalPWMVerde, 0);
+        ledcWrite(canalPWMAzul, ledsBrillo[n]);
+      }
+      break;
+  }
+  Serial.printf("z=%u  n=%u servo=%u\n", z, n, y);
+}
+
+void initPWM(void){
+  ledcSetup(canalPWM, freqPWM, resPWM);
+  ledcAttachPin(servoMotorPin, canalPWM);
+}
+
+void initPWMRojo(void){
+  ledcSetup(canalPWMRojo, freqPWMRojo, resPWMRojo);
+  ledcAttachPin(ledRojo, canalPWMRojo);
+}
+
+void initPWMVerde(void){
+  ledcSetup(canalPWMVerde, freqPWMVerde, resPWMVerde);
+  ledcAttachPin(ledVerde, canalPWMVerde);
+}
+
+void initPWMAzul(void){
+  ledcSetup(canalPWMAzul, freqPWMAzul, resPWMAzul);
+  ledcAttachPin(ledAzul, canalPWMAzul);
+}
