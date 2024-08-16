@@ -1,0 +1,119 @@
+#include <Arduino.h>
+#include "driver/ledc.h"
+#include "config.h"
+
+//interrupciones
+portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+
+// set up the 'counter' feed
+AdafruitIO_Feed *analog1Canal = io.feed("analog1");
+AdafruitIO_Feed *analog2Canal = io.feed("analog2");
+AdafruitIO_Feed *multCanal = io.feed("Multiplication");
+
+int valorPot1 = 0;
+int mapPot1 = 0;
+int valorPot2 = 0;
+int mapPot2 = 0;
+int multiplication = 0;
+
+//potenciometros
+#define pot1 36
+#define pot2 39
+
+//display 1
+#define A1 33
+#define B1 25
+#define C1 26
+#define D1 27
+#define E1 14
+#define F1 12
+#define G1 13
+
+//display 2
+#define A2 2
+#define B2 5
+#define C2 18
+#define D2 19
+#define E2 21
+#define F2 22
+#define G2 23
+
+void setupAnalog(void);
+
+struct Boton1{
+  const uint8_t boton_Reset;
+  bool pressed;
+  bool lastState;
+};
+Boton1 reset = {34, false, false};
+
+//variables de handle interrupcion
+void IRAM_ATTR handle_reset(){
+  portENTER_CRITICAL_ISR(&mux);
+  reset.pressed = true;
+  portEXIT_CRITICAL_ISR(&mux);
+}
+
+void setup() {
+  // start the serial connection
+  Serial.begin(115200);
+
+  // wait for serial monitor to open
+  while(! Serial);
+
+  Serial.print("Connecting to Adafruit IO");
+
+  // connect to io.adafruit.com
+  io.connect();
+
+  // wait for a connection
+  while(io.status() < AIO_CONNECTED) {
+    Serial.print(".");
+    delay(500);
+  }
+
+  // we are connected
+  Serial.println();
+  Serial.println(io.statusText());
+
+  //entradas botones
+  pinMode(reset.boton_Reset, INPUT_PULLUP);
+  attachInterrupt(reset.boton_Reset, handle_reset, RISING);
+
+  setupAnalog();
+
+  //display 1 salidas
+  pinMode(A1, OUTPUT);
+  pinMode(B1, OUTPUT);
+  pinMode(C1, OUTPUT);
+  pinMode(D1, OUTPUT);
+  pinMode(E1, OUTPUT);
+  pinMode(F1, OUTPUT);
+  pinMode(G1, OUTPUT);
+
+  //display 2 salidas
+  pinMode(A2, OUTPUT);
+  pinMode(B2, OUTPUT);
+  pinMode(C2, OUTPUT);
+  pinMode(D2, OUTPUT);
+  pinMode(E2, OUTPUT);
+  pinMode(F2, OUTPUT);
+  pinMode(G2, OUTPUT);
+
+  //estado inicial
+  digitalWrite(A1, LOW);
+  digitalWrite(B1, LOW);
+  digitalWrite(C1, LOW);
+  digitalWrite(D1, LOW);
+  digitalWrite(E1, LOW);
+  digitalWrite(F1, LOW);
+  digitalWrite(G1, LOW);
+  digitalWrite(A2, LOW);
+  digitalWrite(B2, LOW);
+  digitalWrite(C2, LOW);
+  digitalWrite(D2, LOW);
+  digitalWrite(E2, LOW);
+  digitalWrite(F2, LOW);
+  digitalWrite(G2, LOW);  
+
+}
