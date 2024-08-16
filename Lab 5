@@ -117,3 +117,328 @@ void setup() {
   digitalWrite(G2, LOW);  
 
 }
+
+void loop() {
+  io.run();
+
+  valorPot1 = analogRead(pot1);
+  mapPot1 = map(valorPot1, 0, 4095, 0, 15);
+  valorPot2 = analogRead(pot2);
+  mapPot2 = map(valorPot2, 0, 4095, 0, 15);
+  Serial.printf("POT1=%u  POT2=%u MULT=%u\n", valorPot1, valorPot2, multiplication);
+
+  if(reset.pressed != reset.lastState){
+    if (reset.pressed) {
+      multiplication = mapPot1 * mapPot2;
+      analog1Canal->save(mapPot1);
+      analog2Canal->save(mapPot2);
+      multCanal->save(multiplication);
+      delay(3000);
+      reset.pressed = false;
+    }
+    reset.lastState = reset.pressed;
+  }
+
+  switch(mapPot1){
+    case 0:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, HIGH);
+      digitalWrite(C1, HIGH);
+      digitalWrite(D1, HIGH);
+      digitalWrite(E1, HIGH);
+      digitalWrite(F1, HIGH);
+      digitalWrite(G1, LOW);
+      break;
+    case 1:
+      digitalWrite(A1, LOW);
+      digitalWrite(B1, HIGH);
+      digitalWrite(C1, HIGH);
+      digitalWrite(D1, LOW);
+      digitalWrite(E1, LOW);
+      digitalWrite(F1, LOW);
+      digitalWrite(G1, LOW);
+      break;
+    case 2:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, HIGH);
+      digitalWrite(C1, LOW);
+      digitalWrite(D1, HIGH);
+      digitalWrite(E1, HIGH);
+      digitalWrite(F1, LOW);
+      digitalWrite(G1, HIGH);
+      break;
+    case 3:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, HIGH);
+      digitalWrite(C1, HIGH);
+      digitalWrite(D1, HIGH);
+      digitalWrite(E1, LOW);
+      digitalWrite(F1, LOW);
+      digitalWrite(G1, HIGH);
+      break;
+    case 4:
+      digitalWrite(A1, LOW);
+      digitalWrite(B1, HIGH);
+      digitalWrite(C1, HIGH);
+      digitalWrite(D1, LOW);
+      digitalWrite(E1, LOW);
+      digitalWrite(F1, HIGH);
+      digitalWrite(G1, HIGH);
+      break;
+    case 5:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, HIGH);
+      digitalWrite(C1, HIGH);
+      digitalWrite(D1, LOW);
+      digitalWrite(E1, LOW);
+      digitalWrite(F1, LOW);
+      digitalWrite(G1, HIGH);
+      break;
+    case 6:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, LOW);
+      digitalWrite(C1, HIGH);
+      digitalWrite(D1, HIGH);
+      digitalWrite(E1, HIGH);
+      digitalWrite(F1, HIGH);
+      digitalWrite(G1, HIGH);
+      break;
+    case 7:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, HIGH);
+      digitalWrite(C1, HIGH);
+      digitalWrite(D1, LOW);
+      digitalWrite(E1, LOW);
+      digitalWrite(F1, LOW);
+      digitalWrite(G1, LOW);
+      break;
+    case 8:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, HIGH);
+      digitalWrite(C1, HIGH);
+      digitalWrite(D1, HIGH);
+      digitalWrite(E1, HIGH);
+      digitalWrite(F1, HIGH);
+      digitalWrite(G1, HIGH);
+      break;
+    case 9:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, HIGH);
+      digitalWrite(C1, HIGH);
+      digitalWrite(D1, LOW);
+      digitalWrite(E1, LOW);
+      digitalWrite(F1, HIGH);
+      digitalWrite(G1, HIGH);
+      break;
+    case 10:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, HIGH);
+      digitalWrite(C1, HIGH);
+      digitalWrite(D1, LOW);
+      digitalWrite(E1, HIGH);
+      digitalWrite(F1, HIGH);
+      digitalWrite(G1, HIGH);
+      break;
+    case 11:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, HIGH);
+      digitalWrite(C1, HIGH);
+      digitalWrite(D1, HIGH);
+      digitalWrite(E1, HIGH);
+      digitalWrite(F1, HIGH);
+      digitalWrite(G1, HIGH);
+      break;
+    case 12:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, LOW);
+      digitalWrite(C1, LOW);
+      digitalWrite(D1, HIGH);
+      digitalWrite(E1, HIGH);
+      digitalWrite(F1, HIGH);
+      digitalWrite(G1, LOW);
+      break;
+    case 13:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, HIGH);
+      digitalWrite(C1, HIGH);
+      digitalWrite(D1, HIGH);
+      digitalWrite(E1, HIGH);
+      digitalWrite(F1, HIGH);
+      digitalWrite(G1, LOW);
+      break;
+    case 14:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, LOW);
+      digitalWrite(C1, LOW);
+      digitalWrite(D1, HIGH);
+      digitalWrite(E1, HIGH);
+      digitalWrite(F1, HIGH);
+      digitalWrite(G1, HIGH);
+      break;
+    case 15:
+      digitalWrite(A1, HIGH);
+      digitalWrite(B1, LOW);
+      digitalWrite(C1, LOW);
+      digitalWrite(D1, LOW);
+      digitalWrite(E1, HIGH);
+      digitalWrite(F1, HIGH);
+      digitalWrite(G1, HIGH);
+      break;
+  }
+
+  switch(mapPot2){
+    case 0:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, HIGH);
+      digitalWrite(C2, HIGH);
+      digitalWrite(D2, HIGH);
+      digitalWrite(E2, HIGH);
+      digitalWrite(F2, HIGH);
+      digitalWrite(G2, LOW);
+      break;
+    case 1:
+      digitalWrite(A2, LOW);
+      digitalWrite(B2, HIGH);
+      digitalWrite(C2, HIGH);
+      digitalWrite(D2, LOW);
+      digitalWrite(E2, LOW);
+      digitalWrite(F2, LOW);
+      digitalWrite(G2, LOW);
+      break;
+    case 2:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, HIGH);
+      digitalWrite(C2, LOW);
+      digitalWrite(D2, HIGH);
+      digitalWrite(E2, HIGH);
+      digitalWrite(F2, LOW);
+      digitalWrite(G2, HIGH);
+      break;
+    case 3:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, HIGH);
+      digitalWrite(C2, HIGH);
+      digitalWrite(D2, HIGH);
+      digitalWrite(E2, LOW);
+      digitalWrite(F2, LOW);
+      digitalWrite(G2, HIGH);
+      break;
+    case 4:
+      digitalWrite(A2, LOW);
+      digitalWrite(B2, HIGH);
+      digitalWrite(C2, HIGH);
+      digitalWrite(D2, LOW);
+      digitalWrite(E2, LOW);
+      digitalWrite(F2, HIGH);
+      digitalWrite(G2, HIGH);
+      break;
+    case 5:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, HIGH);
+      digitalWrite(C2, HIGH);
+      digitalWrite(D2, LOW);
+      digitalWrite(E2, LOW);
+      digitalWrite(F2, LOW);
+      digitalWrite(G2, HIGH);
+      break;
+    case 6:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, LOW);
+      digitalWrite(C2, HIGH);
+      digitalWrite(D2, HIGH);
+      digitalWrite(E2, HIGH);
+      digitalWrite(F2, HIGH);
+      digitalWrite(G2, HIGH);
+      break;
+    case 7:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, HIGH);
+      digitalWrite(C2, HIGH);
+      digitalWrite(D2, LOW);
+      digitalWrite(E2, LOW);
+      digitalWrite(F2, LOW);
+      digitalWrite(G2, LOW);
+      break;
+    case 8:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, HIGH);
+      digitalWrite(C2, HIGH);
+      digitalWrite(D2, HIGH);
+      digitalWrite(E2, HIGH);
+      digitalWrite(F2, HIGH);
+      digitalWrite(G2, HIGH);
+      break;
+    case 9:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, HIGH);
+      digitalWrite(C2, HIGH);
+      digitalWrite(D2, LOW);
+      digitalWrite(E2, LOW);
+      digitalWrite(F2, HIGH);
+      digitalWrite(G2, HIGH);
+      break;
+    case 10:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, HIGH);
+      digitalWrite(C2, HIGH);
+      digitalWrite(D2, LOW);
+      digitalWrite(E2, HIGH);
+      digitalWrite(F2, HIGH);
+      digitalWrite(G2, HIGH);
+      break;
+    case 11:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, HIGH);
+      digitalWrite(C2, HIGH);
+      digitalWrite(D2, HIGH);
+      digitalWrite(E2, HIGH);
+      digitalWrite(F2, HIGH);
+      digitalWrite(G2, HIGH);
+      break;
+    case 12:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, LOW);
+      digitalWrite(C2, LOW);
+      digitalWrite(D2, HIGH);
+      digitalWrite(E2, HIGH);
+      digitalWrite(F2, HIGH);
+      digitalWrite(G2, LOW);
+      break;
+    case 13:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, HIGH);
+      digitalWrite(C2, HIGH);
+      digitalWrite(D2, HIGH);
+      digitalWrite(E2, HIGH);
+      digitalWrite(F2, HIGH);
+      digitalWrite(G2, LOW);
+      break;
+    case 14:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, LOW);
+      digitalWrite(C2, LOW);
+      digitalWrite(D2, HIGH);
+      digitalWrite(E2, HIGH);
+      digitalWrite(F2, HIGH);
+      digitalWrite(G2, HIGH);
+      break;
+    case 15:
+      digitalWrite(A2, HIGH);
+      digitalWrite(B2, LOW);
+      digitalWrite(C2, LOW);
+      digitalWrite(D2, LOW);
+      digitalWrite(E2, HIGH);
+      digitalWrite(F2, HIGH);
+      digitalWrite(G2, HIGH);
+      break;
+    
+    delay(100);
+  }
+
+}
+
+void setupAnalog(void){
+  analogSetWidth(12);
+  analogSetAttenuation(ADC_11db);
+
+}
